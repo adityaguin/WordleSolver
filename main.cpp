@@ -301,7 +301,6 @@ void getUserInput(int attempt){
 	for(string s : entities){
 		if(s[s.size() - 1] != '!'){
 			++finals;
-			// cout << s << endl;
 		}
 	}
 	if(finals == 1){
@@ -317,18 +316,10 @@ void getUserInput(int attempt){
 		return;
 	}
 	else{
-		// cout << "******************************" << endl;
-		// for(string s : entities){
-		// 	if(s[s.size() - 1] != '!'){
-		// 		cout << s << endl;
-		// 	}
-		// }
 		cout << finals << " valid words left" << endl;
 	}
 	
 	next();
-	
-	// logbook.push_back({guess, bog, finals});	
 }
 
 int main(){
