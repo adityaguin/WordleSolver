@@ -15,3 +15,8 @@ Program: Primitive Wordle solver.
 	       english language
 
 	Just a fun idea I had :) 
+
+
+CREDIT FOR DATA:
+	File for all english words: https://github.com/dwyl/english-words (words.txt)
+	File for all english words and there frequency: https://github.com/hermitdave/FrequencyWords (en_full.txt)
