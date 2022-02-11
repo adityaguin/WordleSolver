@@ -14,7 +14,7 @@ Program: Primitive Wordle solver.
 	Logic: Basic idea of combining letter frequency of remaining valid words and commonly used in  
 	       english language
 
-	Just a fun idea I had :) 
+	Just a fun idea I had :) I guess my next goal should try and automate this process
 
 
 CREDIT FOR DATA:
