@@ -19,4 +19,4 @@ Program: Primitive Wordle solver.
 
 CREDIT FOR DATA:
 	File for all english words: https://github.com/dwyl/english-words (words.txt)
-	File for all english words and there frequency: https://github.com/hermitdave/FrequencyWords (en_full.txt)
+	File for all english words and theie frequencies: https://github.com/hermitdave/FrequencyWords (en_full.txt)
