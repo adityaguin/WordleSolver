@@ -35,6 +35,7 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <set>
 
 using namespace std;
 
@@ -47,13 +48,13 @@ bool answerFound = false;
 
 pair<string, long long> seperator(string s){
 	string first, second;
-	long long i = 0;
-	while(s[i] != 32){
+	size_t i = 0;
+	while(i < s.size() && s[i] != 32){
 		first += s[i];
 		i++;
 	}
 	i++;
-	while(i != s.size()){
+	while(i < s.size()){
 		second += s[i];
 		i++;
 	}
@@ -144,14 +145,22 @@ void next(){
 		string s = entities[i];
 		int amount = 0;
 		if(s[s.size() - 1] != '!' && isUpper(s)){
+			set<char> seen;
 			for(char sd : s){
-				amount += freq[sd];
+				if(seen.find(sd) == seen.end()){
+					amount += freq[sd];
+					seen.insert(sd);
+				}
 			}
 			if(prob.find(s) != prob.end()){
 				pair<double, string> h = {amount*prob[s], s};
 				remaining.push_back(h);
 			}
-			
+			else{
+				pair<double, string> h = {amount*1e-10, s};
+				remaining.push_back(h);
+			}
+
 		}
 	}
 	sort(remaining.begin(), remaining.end());
@@ -182,7 +191,6 @@ void readInput(){
 }
 
 void getUserInput(int attempt){
-	ofstream out("Help.txt");
 	bool errorcheck = true;
 	string guess; string bog;
 	
@@ -245,6 +253,12 @@ void getUserInput(int attempt){
 					else if(bog[i] == 'O' && bog[j] == 'B'){
 						guess[j] = '%';
 					}
+					else if(bog[i] == 'O' && bog[j] == 'G'){
+						guess[i] = '%';
+					}
+					else if(bog[i] == 'G' && bog[j] == 'O'){
+						guess[j] = '%';
+					}
 				}
 			}
 		}
@@ -271,14 +285,13 @@ void getUserInput(int attempt){
 				string consider = entities[j];
 				
 				if(consider[consider.size() - 1] != '!' && isalpha(character)){
-					bool contain = false;
+					bool containElsewhere = false;
 					for(int jjj = 0; jjj < 5; jjj++){
-						char d = consider[jjj];
-						if(d == character && jjj != i){
-							contain = true;
+						if(consider[jjj] == character && jjj != i){
+							containElsewhere = true;
 						}
 					}
-					if(!contain){						
+					if(!containElsewhere || consider[i] == character){
 						entities[j] += "!";
 					}
 				}
@@ -327,6 +340,8 @@ int main(){
 	 readInput();
 	 
 	calculateProbability();
+	cout << "Top starting words:" << endl;
+	next();
 	attempts = 6;
 	while(attempts != 0 && answerFound == false){
 		getUserInput(attempts);
