@@ -1,22 +1,50 @@
 # WordleSolver
-Program: Primitive Wordle solver. 
 
-	Instructions: 
-	1) Access a wordle game online (read instructions online if unsure how to play). 
-	2) On BASH terminal type command (./comp.sh)
-	3) Enter your guess on wordle, look at the color sequence you get
-	4) Enter your guess in the terminal (all caps) followed by a sequence of B/O/G where 
-	   B = black, O = Orange / Yellow, and G = Green. You should see word recommendations given
-	   Repeat 3 & 4.
-	
-	5) Enjoy the game :) {Should be self explanatory}
+A Wordle solver that suggests optimal guesses based on letter frequency and word probability.
 
-	Logic: Basic idea of combining letter frequency of remaining valid words and commonly used in  
-	       english language
+**Try it live:** [adityaguin.github.io/WordleSolver](https://adityaguin.github.io/WordleSolver/)
 
-	Just a fun idea I had :) I guess my next goal should try and automate this process
+## Web App
 
+A browser-based frontend — no installation needed. Just open the link above and:
 
-CREDIT FOR DATA:
-	File for all english words: https://github.com/dwyl/english-words (words.txt)
-	File for all english words and theie frequencies: https://github.com/hermitdave/FrequencyWords (en_full.txt)
+1. Enter your 5-letter guess
+2. Click the tiles to set colors (Black / Orange / Green) to match Wordle's feedback
+3. Confirm and get the top recommended words for your next guess
+4. Repeat until solved
+
+**Features:**
+- Top starting word suggestions
+- Click recommendations to auto-fill your next guess
+- Undo button to revert mistakes
+- Keyboard shortcuts: press B / O / G to set tile colors, arrow keys to navigate tiles
+
+## CLI Version (C++)
+
+The original command-line solver.
+
+### Setup
+
+```bash
+./comp.sh
+```
+
+### Usage
+
+1. Open a Wordle game
+2. Run the solver and enter your guess (all caps)
+3. Enter the color feedback as a 5-character string: `B` = Black, `O` = Orange/Yellow, `G` = Green
+4. Follow the recommendations and repeat
+
+## How It Works
+
+The solver scores candidate words by combining two signals:
+- **Letter frequency** among remaining valid words (unique letters only)
+- **Word probability** based on real-world English usage frequency
+
+After each guess, words are eliminated based on Wordle's color feedback rules, including correct handling of duplicate letters.
+
+## Data Credits
+
+- Word list: [dwyl/english-words](https://github.com/dwyl/english-words)
+- Word frequencies: [hermitdave/FrequencyWords](https://github.com/hermitdave/FrequencyWords)
