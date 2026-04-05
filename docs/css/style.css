@@ -283,12 +283,27 @@ main {
   color: #538d4e;
 }
 
-/* ── New Game ── */
+/* ── Undo & New Game ── */
+#undo-btn {
+  background: transparent;
+  color: #818384;
+  border: 1px solid #3a3a3c;
+}
+
+#undo-btn:hover:not(:disabled) {
+  color: #ffffff;
+  border-color: #565758;
+}
+
+#undo-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 #new-game-btn {
   background: transparent;
   color: #818384;
   border: 1px solid #3a3a3c;
-  margin-top: 8px;
 }
 
 #new-game-btn:hover {

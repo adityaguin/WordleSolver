@@ -16,6 +16,7 @@ const confirmBtn = document.getElementById('confirm-btn');
 const colorInstructions = document.getElementById('color-instructions');
 const status = document.getElementById('status');
 const recList = document.getElementById('rec-list');
+const undoBtn = document.getElementById('undo-btn');
 const newGameBtn = document.getElementById('new-game-btn');
 
 // ── Build Board ──
@@ -76,6 +77,10 @@ function renderRecommendations(recs, title = 'Recommendations') {
 function setStatus(msg, type = '') {
   status.textContent = msg;
   status.className = type;
+}
+
+function updateUndoBtn() {
+  undoBtn.disabled = !solver || !solver.canUndo() || phase === 'coloring';
 }
 
 // ── Tile Color Cycling ──
@@ -147,6 +152,7 @@ function handleConfirmColors() {
   confirmBtn.classList.remove('visible');
   colorInstructions.classList.remove('visible');
   activeTileIndex = -1;
+  updateUndoBtn();
 
   if (result.solved) {
     setStatus(`${result.recommendations[0].word} is the answer!`, 'solved');
@@ -229,6 +235,33 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+undoBtn.addEventListener('click', () => {
+  if (!solver || !solver.canUndo()) return;
+  const result = solver.undo();
+  currentRow--;
+
+  // Clear the undone row
+  const tiles = getTilesForRow(currentRow);
+  tiles.forEach(t => {
+    t.textContent = '';
+    t.className = 'tile';
+    t.dataset.color = '';
+    t.style.outline = '';
+  });
+
+  phase = 'input';
+  submitBtn.disabled = false;
+  guessInput.disabled = false;
+  confirmBtn.classList.remove('visible');
+  colorInstructions.classList.remove('visible');
+  activeTileIndex = -1;
+
+  setStatus(`${result.remaining} words remaining`);
+  renderRecommendations(result.recommendations);
+  updateUndoBtn();
+  guessInput.focus();
+});
+
 newGameBtn.addEventListener('click', () => {
   solver.reset();
   currentRow = 0;
@@ -242,6 +275,7 @@ newGameBtn.addEventListener('click', () => {
   const recs = solver.scoreAndRank(10);
   renderRecommendations(recs, 'Top Starting Words');
   setStatus(`${solver.getRemainingCount()} words available`);
+  updateUndoBtn();
   guessInput.focus();
 });
 
@@ -256,6 +290,7 @@ async function init() {
     const recs = solver.scoreAndRank(10);
     renderRecommendations(recs, 'Top Starting Words');
     setStatus(`${solver.getRemainingCount()} words available`);
+    updateUndoBtn();
     guessInput.focus();
   } catch (err) {
     setStatus('Failed to load word data. Run preprocess.js first.', 'error');

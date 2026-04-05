@@ -4,6 +4,7 @@ export class WordleSolver {
     this.freq = data.freq;
     this.eliminated = new Set();
     this.guessHistory = [];
+    this.snapshots = [];
     this.answerFound = false;
     this.answer = null;
   }
@@ -56,6 +57,7 @@ export class WordleSolver {
     guess = guess.toUpperCase();
     colors = colors.toUpperCase();
 
+    this.snapshots.push(new Set(this.eliminated));
     this.guessHistory.push({ word: guess, colors });
 
     // Check for all green — solved
@@ -161,9 +163,26 @@ export class WordleSolver {
     };
   }
 
+  canUndo() {
+    return this.snapshots.length > 0;
+  }
+
+  undo() {
+    if (!this.canUndo()) return null;
+    this.eliminated = this.snapshots.pop();
+    this.guessHistory.pop();
+    this.answerFound = false;
+    this.answer = null;
+    return {
+      remaining: this.getRemainingCount(),
+      recommendations: this.scoreAndRank(10)
+    };
+  }
+
   reset() {
     this.eliminated = new Set();
     this.guessHistory = [];
+    this.snapshots = [];
     this.answerFound = false;
     this.answer = null;
   }
