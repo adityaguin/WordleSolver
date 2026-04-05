@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const solverDir = path.join(__dirname, '..', 'WordleSolver');
+const solverDir = path.join(__dirname, '..');
 
 // Read English.txt — one uppercase 5-letter word per line
 const englishRaw = fs.readFileSync(path.join(solverDir, 'English.txt'), 'utf-8');
