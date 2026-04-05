@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wordle Solver</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Wordle Solver</h1>
+  </header>
+  <main>
+    <div id="game-board"></div>
+
+    <div id="input-area">
+      <input type="text" id="guess-input" maxlength="5" placeholder="Enter guess" autocomplete="off" spellcheck="false">
+      <button class="btn" id="submit-btn">Enter</button>
+    </div>
+
+    <p id="color-instructions">
+      Click tiles to cycle colors:
+      <span class="key">Click</span> or press
+      <span class="key">B</span> <span class="key">O</span> <span class="key">G</span>
+      &mdash; then confirm
+    </p>
+
+    <button class="btn" id="confirm-btn">Confirm Colors</button>
+
+    <p id="status"></p>
+
+    <div id="recommendations">
+      <h2>Recommendations</h2>
+      <ul id="rec-list"></ul>
+    </div>
+
+    <button class="btn" id="new-game-btn">New Game</button>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
